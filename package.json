@@ -1,0 +1,34 @@
+{
+  "name": "api-sqlite",
+  "version": "1.0.0",
+  "description": "API gave a contact list in NodeJs for study, using Sqlite and Express",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://FransergioDev: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@github.com/FransergioDev/api-sqlite.git"
+  },
+  "keywords": [
+    "API",
+    "NodeJs",
+    "Express",
+    "Sqlite",
+    "Study"
+  ],
+  "author": "Fransérgio de A. Mota",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FransergioDev/api-sqlite/issues"
+  },
+  "homepage": "https://github.com/FransergioDev/api-sqlite#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "sqlite": "^4.2.0",
+    "sqlite3": "^5.1.6"
+  },
+  "type": "module"
+}
