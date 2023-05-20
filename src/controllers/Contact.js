@@ -1,4 +1,4 @@
-import { openDb } from "../../config/configDB.js";
+import { openDb } from "../config/configDB.js";
 
 export async function createTableContact() {
     await openDb().then(db => {
@@ -14,7 +14,7 @@ export async function createTableContact() {
         } catch (error) {
             throw new Error(error);
         }
-    }).catch((e) => new Error(error));
+    }).catch((e) => new Error(e));
 }
 
 export async function insertContact(req, res) {

@@ -1,7 +1,7 @@
 
 import fs from 'fs';
 import https from 'https';
-import app from '../src/app.js';
+import app from './app.js';
 
 app.listen(3000, () => console.log('Run API'));
 
