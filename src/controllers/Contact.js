@@ -54,11 +54,15 @@ export async function updateContact(req, res) {
 
 export async function selectContacts(req, res) {
     await openDb().then(db => {
-        return db.all(`SELECT * FROM Contact`).then((contacts) => res.json({"statusCode" : 200, "contacts": contacts})).catch((e) => res.json({"statusCode" : 400, "error": e}));   
+        return db.all(`SELECT * FROM Contact`)
+            .then((contacts) => res.json({"statusCode" : 200, "contacts": contacts}))
+            .catch((e) => res.json({"statusCode" : 400, "error": e}));   
     }).catch((e) => res.json({"statusCode" : 400, "error": e}));
 }
 
 export async function selectContact(req, res) {
+    if (req.params && !req.params.id) res.json({"statusCode" : 400, "messenger": "Você precisa informar id"});
+    
     const id = req.params.id | 0;
     await openDb().then(db => {
         return db.get(`SELECT * FROM Contact WHERE id=?`, [id])
@@ -68,7 +72,7 @@ export async function selectContact(req, res) {
 }
 
 export async function deleteContact(req, res) {
-    //if (req.body && !req.body.id) res.json({"statusCode" : 400, "messenger": "Você precisa informar id"});
+    if (req.params && !req.params.id) res.json({"statusCode" : 400, "messenger": "Você precisa informar id"});
 
     const id = req.params.id | 0;
     await openDb().then(db => {

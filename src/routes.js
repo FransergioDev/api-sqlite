@@ -1,20 +1,15 @@
 import { Router } from 'express';
-import { createTableContact, insertContact, updateContact, selectContact, selectContacts, deleteContact} from './controllers/Contact.js';
+import routerContacts from "./routes/contacts.js";
 
+const version = '1';
 const router = Router();
 
-await createTableContact();
 
-router.get('/api/v1', (req, res) => {
-    res.send("versão 1.0");
-});
-
-
-router.get('/contacts', selectContacts);
-router.get('/contacts/:id', selectContact);
-router.post('/contacts', insertContact);
+router.get('/', (req, res) => res.send(`API de Contatos em NodeJS, Express e SqLite. Versão: ${version}`));
+router.use(`/v${version}/contacts`, routerContacts);
 
 /*
+  router.route('/contacts', routerContacts)
 app.get('/contacts', async (req, res) => {
     await selectContacts(req.body).then((contacts) => {
         res.json({"statusCode" : 200, "contacts": contacts});
