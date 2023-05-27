@@ -1,8 +1,6 @@
 
 import { Router } from 'express';
-import { createTableContact, insertContact, updateContact, selectContact, selectContacts, deleteContact} from '../controllers/Contact.js'
-
-await createTableContact();
+import { insertContact, updateContact, selectContact, selectContacts, deleteContact} from '../controllers/Contact.js'
 
 const routerContacts = Router();
 routerContacts.route('/')

@@ -20,6 +20,7 @@ export async function createTableContact() {
 export async function insertContact(req, res) {
     console.log(req.body);
     const contact = req.body;
+    await createTableContact();
     await openDb().then(db => {
         return db.run(`INSERT INTO Contact (name, mail, address, telephone, cellphone) VALUES (?,?,?,?,?)`, [
             contact.name,
@@ -38,6 +39,7 @@ export async function updateContact(req, res) {
     if (req.body && !req.body.id) res.json({"statusCode" : 400, "messenger": "Você precisa informar id"})
 
     const contact = req.body;
+    await createTableContact();
     await openDb().then(db => {
         return db.run(`UPDATE Contact SET ((name=?, mail=?, address=?, telephone=?, cellphone=? WHERE id=?`, [
             contact.name,
@@ -53,6 +55,7 @@ export async function updateContact(req, res) {
 }
 
 export async function selectContacts(req, res) {
+    await createTableContact();
     await openDb().then(db => {
         return db.all(`SELECT * FROM Contact`)
             .then((contacts) => res.json({"statusCode" : 200, "contacts": contacts}))
@@ -64,6 +67,7 @@ export async function selectContact(req, res) {
     if (req.params && !req.params.id) res.json({"statusCode" : 400, "messenger": "Você precisa informar id"});
     
     const id = req.params.id | 0;
+    await createTableContact();
     await openDb().then(db => {
         return db.get(`SELECT * FROM Contact WHERE id=?`, [id])
             .then((contact) => res.json({"statusCode" : 200, "contact": contact}))
@@ -75,6 +79,7 @@ export async function deleteContact(req, res) {
     if (req.params && !req.params.id) res.json({"statusCode" : 400, "messenger": "Você precisa informar id"});
 
     const id = req.params.id | 0;
+    await createTableContact();
     await openDb().then(db => {
         return db.get(`DELETE  FROM Contact WHERE id=?`, [id])
             .then((res) => res.json({"statusCode" : 200}))
