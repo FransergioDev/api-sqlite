@@ -1,0 +1,59 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentação da API Contatos em NodeJS, Express e SqLite com Swagger",
+        "description": "Documentação da API Contatos em NodeJS, Express e SqLite com Swagger: Endpoints to test the user registration routes",
+        "contact": {
+            "email": "fransergio.dev@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/",
+            "description": "API de test/Local"
+        },
+        {
+            "url": "https://api-example.onrender.com",
+            "description": "Render"
+        },
+        {
+            "url": "https://example.herokuapp.com",
+            "description": "Heroku"
+        }
+    ],
+    "paths": {
+        "/v1/contacts": {
+            "get" : {
+                "summary": "Search all users",
+                "description": "Route responsible for fetching all users",
+                "tags": ["Users"],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "401": {
+                    "description": "Unauthorized"
+                    },
+                    "400": {
+                    "description": "Not Found"
+                    },
+                    "200": {
+                    "description": "OK",
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                                        
+                            }
+                        }
+                        }
+                    }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        
+    }
+}

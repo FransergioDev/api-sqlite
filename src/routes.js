@@ -1,12 +1,15 @@
-import { Router } from 'express';
+import { Router } from "express";
 import routerContacts from "./routes/contacts.js";
+import routerSwagger from "./routes/swagger.js";
 
-const version = '1';
+const version = "1";
 const router = Router();
 
-
-router.get('/', (req, res) => res.send(`API de Contatos em NodeJS, Express e SqLite. Versão: ${version}`));
+router.get("/", (req, res) =>
+  res.send(`API de Contatos em NodeJS, Express e SqLite. Versão: ${version}`)
+);
 router.use(`/v${version}/contacts`, routerContacts);
+router.use("/doc", routerSwagger);
 
 /*
   router.route('/contacts', routerContacts)
