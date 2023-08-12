@@ -1,4 +1,5 @@
 import { openDb } from "../config/configDB.js";
+import Cache from "../config/cache.js";
 
 export async function createTableContact() {
   await openDb()
@@ -70,12 +71,24 @@ export async function updateContact(req, res) {
 }
 
 export async function selectContacts(req, res) {
+  //console.log("req", req.baseUrl);
+
+  const cache = new Cache();
+  const cached = await cache.get(req.baseUrl);
+
+  //console.log("cached", cached);
+
+  if (cached) return res.json({ statusCode: 200, contacts: cached });
+
   await createTableContact();
   await openDb()
     .then((db) => {
       return db
         .all(`SELECT * FROM Contact`)
-        .then((contacts) => res.json({ statusCode: 200, contacts: contacts }))
+        .then((contacts) => {
+          cache.set(req.baseUrl, contacts, 60 * 15);
+          res.json({ statusCode: 200, contacts: contacts });
+        })
         .catch((e) => res.json({ statusCode: 400, error: e }));
     })
     .catch((e) => res.json({ statusCode: 400, error: e }));
@@ -86,12 +99,22 @@ export async function selectContact(req, res) {
     res.json({ statusCode: 400, messenger: "Você precisa informar id" });
 
   const id = req.params.id | 0;
+  //console.log("req", `${req.baseUrl}/${id}`);
+
+  const cache = new Cache();
+  const cached = await cache.get(`${req.baseUrl}/${id}`);
+  //console.log("cached:", cached);
+  if (cached) return res.json({ statusCode: 200, contact: cached });
+
   await createTableContact();
   await openDb()
     .then((db) => {
       return db
         .get(`SELECT * FROM Contact WHERE id=?`, [id])
-        .then((contact) => res.json({ statusCode: 200, contact: contact }))
+        .then((contact) => {
+          cache.set(`${req.baseUrl}/${id}`, contact, 60 * 15);
+          res.json({ statusCode: 200, contact: contact });
+        })
         .catch((e) => res.json({ statusCode: 400, error: e }));
     })
     .catch((e) => res.json({ statusCode: 500, error: e }));
