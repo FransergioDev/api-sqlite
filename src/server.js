@@ -1,6 +1,7 @@
 import fs from "fs";
 import https from "https";
 import app from "./app.js";
+import graphqlStartServer from "./graphql.js";
 //import swaggerJSDoc from 'swagger-jsdoc';
 
 const port = process.env.PORT || 3000;
@@ -44,5 +45,7 @@ https
     app
   )
   .listen(portSSL, () =>
-    console.log(`Run API HTTPS: Server running on port ${portSSL}`)
+    console.log(`✅ Run API HTTPS: Server running on port ${portSSL}`)
   );
+
+graphqlStartServer();
